@@ -17,25 +17,26 @@ The first argument to the application should be the name of the phonebook. Appli
 """
 import json
 
-def rewritting_json (filename, data):
+
+def rewritting_json(filename, data):
     with open(filename, "w") as file:
         json.dump(data, file, indent=2)
 
 
 def add_new_entries():
-        name = input('Имя: ').capitalize()
-        lastname = input("Фамилия: ").capitalize()
-        phone = input("Телефон: ")
-        city = input("Город: ")
-        contact = {
-            'firstName': name,
-            "lastName": lastname,
-            "fullName": name+" "+lastname,
-            "phone": phone,
-            "city": city
-        }
-        load_list.append(contact)
-        rewritting_json('phonebook.json', load_list)
+    name = input('Имя: ').capitalize()
+    lastname = input("Фамилия: ").capitalize()
+    phone = input("Телефон: ")
+    city = input("Город: ")
+    contact = {
+        'firstName': name,
+        "lastName": lastname,
+        "fullName": name + " " + lastname,
+        "phone": phone,
+        "city": city
+    }
+    load_list.append(contact)
+    rewritting_json('phonebook.json', load_list)
 
 
 def searching(parametr, value):
@@ -48,13 +49,19 @@ def searching(parametr, value):
                 return item
         if i == 0:
             print('не найдено!!!!')
+
+
 def printing_contact(item):
-    print(f"{'-'*20}\n Имя: {item['firstName']}\nФамилия: {item['lastName']}\nТелефон: {item['phone']}\nГород: {item['city']}\n"
-          + "-"*20)
+    print(
+        f"{'-' * 20}\n Имя: {item['firstName']}\nФамилия: {item['lastName']}\nТелефон: {item['phone']}\nГород: {item['city']}\n"
+        + "-" * 20)
+
+
 def delete_by_phone(phone):
     item = searching('phone', phone)
     load_list.remove(item)
     rewritting_json('phonebook.json', load_list)
+
 
 def update_contact(phone):
     item = searching('phone', phone)
@@ -65,10 +72,10 @@ def update_contact(phone):
     new_city = input("Введите новый город (просто Enter, если без изменений)").capitalize()
     if new_name:
         item["firstName"] = new_name
-        item["fullName"] = new_name+" "+item["lastName"]
+        item["fullName"] = new_name + " " + item["lastName"]
     if new_lasrname:
         item["lastName"] = new_lasrname
-        item["fullName"] = item["firstName"]+" "+ new_lasrname
+        item["fullName"] = item["firstName"] + " " + new_lasrname
     if new_phone:
         item["phone"] = new_phone
     if new_city:
@@ -78,12 +85,10 @@ def update_contact(phone):
 
 
 with open('phonebook.json') as file_read:
-        try:
-            load_list = json.load(file_read)
-        except:
-            load_list = []
-
-
+    try:
+        load_list = json.load(file_read)
+    except:
+        load_list = []
 
 if __name__ == "__main__":
     action = input('Нужно добавить контакт(A), искать в книге(S), удалить(D) или изменить(C) контакт?').upper()
@@ -96,8 +101,9 @@ if __name__ == "__main__":
         phone_to_change = input('Введите номер для изменения \n')
         update_contact(phone_to_change)
     elif action == "S":
-        search_by = input("Вы выбрали поиск, по какому параметру искать? N - имя, L- фамилия, F - полное имя, P - номер,"
-                          " C - город").upper()
+        search_by = input(
+            "Вы выбрали поиск, по какому параметру искать? N - имя, L- фамилия, F - полное имя, P - номер,"
+            " C - город").upper()
         searching_parametrs = {
             "N": 'firstName',
             "L": "lastName",
@@ -109,10 +115,4 @@ if __name__ == "__main__":
         if search_by in ("N", "L", "F", "P", "C"):
             for key, value in searching_parametrs.items():
                 if key == search_by:
-
                     printing_contact(searching(value, search_by_value))
-
-
-
-
-
