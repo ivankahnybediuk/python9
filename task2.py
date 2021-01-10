@@ -42,13 +42,14 @@ def add_new_entries():
 def searching(parametr, value):
     with open('phonebook.json') as file:
         phonebook = json.load(file)
-        i = 0
+        search_result = []
         for item in phonebook:
             if item.get(parametr) == value:
-                i += 1
-                return item
-        if i == 0:
+                search_result.append(item)
+                printing_contact(item)
+        if search_result == 0:
             print('не найдено!!!!')
+
 
 
 def printing_contact(item):
@@ -112,7 +113,11 @@ if __name__ == "__main__":
             "C": "city"
         }
         search_by_value = (input(" Введите значение для поиска \n").lower()).capitalize()
-        if search_by in ("N", "L", "F", "P", "C"):
+        if search_by in searching_parametrs.keys():
             for key, value in searching_parametrs.items():
-                if key == search_by:
-                    printing_contact(searching(value, search_by_value))
+                searching(value, search_by_value)
+        else:
+            print("Не верные данные!")
+
+
+
